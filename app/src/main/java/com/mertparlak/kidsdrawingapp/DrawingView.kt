@@ -41,7 +41,6 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         mCanvasBitMap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-
         if (mCanvasBitMap != null){
             canvas = Canvas(mCanvasBitMap!!)
         }
@@ -50,10 +49,13 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+
+
         canvas?.drawBitmap(mCanvasBitMap!!, 0f,0f,mCanvasPaint)
 
+
          for(path in mPaths){
-             mDrawPath!!.brushThickness = path.brushThickness
+             mDrawPaint?.strokeWidth = path.brushThickness
              mDrawPaint!!.color = path.color
              canvas?.drawPath(path,mDrawPaint!!)
 
@@ -75,8 +77,8 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             MotionEvent.ACTION_DOWN ->{
                 mDrawPath!!.color = color
                 mDrawPath!!.brushThickness = mBrushSize
-
                 mDrawPath!!.reset()
+
                 if (touchX != null){
                     if (touchY != null){
                         mDrawPath!!.moveTo(touchX,touchY)
@@ -106,6 +108,13 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         mBrushSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newSize, resources.displayMetrics)
 
         mDrawPaint!!.strokeWidth = mBrushSize
+    }
+
+    fun setColor(newColor: String){
+        color = Color.parseColor(newColor)
+        mDrawPaint!!.color = color
+
+
     }
 
 
