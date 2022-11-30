@@ -29,10 +29,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-
-
         val ibBrush : ImageButton = findViewById(R.id.ib_brush)
         ibBrush.setOnClickListener {
             showBrushSizeChooserDialog()
